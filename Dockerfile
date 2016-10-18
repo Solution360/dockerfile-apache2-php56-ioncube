@@ -1,7 +1,7 @@
 FROM debian:8
 
 RUN apt-get update
-RUN apt-get install -y wget curl openssh-server apache2 php5 php5-imagick php5-gd php5-mysql php5-xdebug unzip
+RUN apt-get install -y wget curl apache2 php5 php5-imagick php5-gd php5-mysql php5-xdebug unzip
 RUN service apache2 restart
 
 #configure XDebug
@@ -25,12 +25,7 @@ ENV APACHE_RUN_USER www-data
 ENV APACHE_RUN_GROUP www-data
 ENV APACHE_LOG_DIR /var/log/apache2
 
-RUN echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
-
 EXPOSE 80
 EXPOSE 443
-EXPOSE 22
 
-CMD cd /var/www/html/jtlshop
-CMD chmod -R 777 *
 CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
