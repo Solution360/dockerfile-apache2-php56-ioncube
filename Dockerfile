@@ -4,6 +4,10 @@ RUN apt-get update
 RUN apt-get install -y wget curl apache2 php5 php5-imagick php5-gd php5-mysql php5-xdebug unzip
 RUN service apache2 restart
 
+#configure php
+RUN ["bin/bash", "-c", "sed -i 's/max_execution_time\\s*=.*/max_execution_time=180/g' /etc/php5/apache2/php.ini"]
+RUN ["bin/bash", "-c", "sed -i 's/upload_max_filesize\\s*=.*/upload_max_filesize=16M/g' /etc/php5/apache2/php.ini"]
+
 #configure XDebug
 RUN echo [XDebug] >> /etc/php5/apache2/php.ini
 RUN echo xdebug.remote_enable=1 >> /etc/php5/apache2/php.ini
