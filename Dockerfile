@@ -8,6 +8,9 @@ RUN service apache2 restart
 RUN ["bin/bash", "-c", "sed -i 's/max_execution_time\\s*=.*/max_execution_time=180/g' /etc/php5/apache2/php.ini"]
 RUN ["bin/bash", "-c", "sed -i 's/upload_max_filesize\\s*=.*/upload_max_filesize=16M/g' /etc/php5/apache2/php.ini"]
 
+#configure apache
+RUN ["bin/bash", "-c", "sed -i 's/AllowOverride None/AllowOverride All\\nSetEnvIf X-Forwarded-Proto https HTTPS=on/g' /etc/apache2/apache2.conf"]
+
 #configure XDebug
 RUN echo [XDebug] >> /etc/php5/apache2/php.ini
 RUN echo xdebug.remote_enable=1 >> /etc/php5/apache2/php.ini
@@ -24,6 +27,7 @@ RUN service apache2 restart
 # Configure apache
 RUN a2enmod rewrite
 RUN a2enmod ssl
+RUN a2enmod proxy
 RUN chown -R www-data:www-data /var/www
 ENV APACHE_RUN_USER www-data
 ENV APACHE_RUN_GROUP www-data
