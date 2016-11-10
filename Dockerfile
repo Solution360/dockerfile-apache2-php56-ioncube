@@ -32,6 +32,7 @@ RUN service apache2 restart
 RUN a2enmod rewrite
 RUN a2enmod ssl
 RUN a2enmod proxy
+RUN a2enmod headers
 RUN chown -R www-data:www-data /var/www
 ENV APACHE_RUN_USER www-data
 ENV APACHE_RUN_GROUP www-data
